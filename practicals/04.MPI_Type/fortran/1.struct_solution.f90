@@ -29,8 +29,9 @@ PROGRAM struct
    INTEGER numtasks, rank, source, dest, tag, i, ierror
    INTEGER stat(MPI_STATUS_SIZE)
    TYPE (Particle) p(NELEM)
-   INTEGER particletype, oldtypes(0:1), blockcounts(0:1), offsets(0:1), extent
-
+   INTEGER particletype, oldtypes(0:1), blockcounts(0:1), extent
+   INTEGER(KIND=MPI_ADDRESS_KIND) offsets(0:1) 
+   
    CALL MPI_Init(ierror)
    CALL MPI_Comm_rank(MPI_COMM_WORLD, rank, ierror)
    CALL MPI_Comm_size(MPI_COMM_WORLD, numtasks, ierror)

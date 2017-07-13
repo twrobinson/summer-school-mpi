@@ -40,10 +40,10 @@ PROGRAM simple_send_recv
 
    ! Send the contents of number from rank 0 to rank 1 using MPI_Send --- MPI_Recv
    IF (rank.EQ.0) THEN
-      CALL MPI_Send(number, 1, MPI_INT, 1, 0, MPI_COMM_WORLD, ierror)
+      CALL MPI_Send(number, 1, MPI_INTEGER, 1, 0, MPI_COMM_WORLD, ierror)
    END IF
    IF (rank.eq.1) THEN
-      CALL MPI_Recv(number, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, stat, ierror)
+      CALL MPI_Recv(number, 1, MPI_INTEGER, 0, 0, MPI_COMM_WORLD, stat, ierror)
    END IF
 
    IF (rank.EQ.1) THEN

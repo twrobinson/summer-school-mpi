@@ -26,7 +26,7 @@ PROGRAM reduce
 
    ! reduce the values of the different ranks in input to result of rank 0
    ! with the operation sum (max, logical and)
-   CALL MPI_Reduce(input, result, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD, ierror)
+   CALL MPI_Reduce(input, result, 1, MPI_INTEGER, MPI_SUM, 0, MPI_COMM_WORLD, ierror)
 
    IF (rank.EQ.0) THEN
       write (*,*) 'Rank 0 says: result is', result

@@ -28,7 +28,7 @@ PROGRAM broadcast
    END IF
 
    ! broadcast the value of data of rank 0 to all ranks
-   CALL MPI_Bcast(data, 1, MPI_INT, 0, MPI_COMM_WORLD, ierror)
+   CALL MPI_Bcast(data, 1, MPI_INTEGER, 0, MPI_COMM_WORLD, ierror)
 
    WRITE (*,*) "I am rank", rank, "and the value is", data
 

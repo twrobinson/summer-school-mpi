@@ -38,7 +38,7 @@ PROGRAM scatter
    END IF
 
    ! scatter the value of senddata of rank 0 to receivedata of all ranks
-   CALL MPI_Scatter(senddata, 1, MPI_INT, receivedata, 1, MPI_INT, 0, MPI_COMM_WORLD, ierror)
+   CALL MPI_Scatter(senddata, 1, MPI_INTEGER, receivedata, 1, MPI_INTEGER, 0, MPI_COMM_WORLD, ierror)
 
    WRITE (*,*) "I am rank", rank, "and the value is", receivedata
 

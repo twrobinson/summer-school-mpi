@@ -70,26 +70,26 @@ PROGRAM ghost_cell_exchange
   !  to the left
 
   ! a)
-  CALL MPI_Irecv(data(2,DOMAINSIZE), SUBDOMAIN, MPI_DOUBLE, rank_right, 0, MPI_COMM_WORLD, request, ierror)
-  CALL MPI_Send(data(2,2), SUBDOMAIN, MPI_DOUBLE, rank_left, 0, MPI_COMM_WORLD, ierror)
+  CALL MPI_Irecv(data(2,DOMAINSIZE), SUBDOMAIN, MPI_DOUBLE_PRECISION, rank_right, 0, MPI_COMM_WORLD, request, ierror)
+  CALL MPI_Send(data(2,2), SUBDOMAIN, MPI_DOUBLE_PRECISION, rank_left, 0, MPI_COMM_WORLD, ierror)
   CALL MPI_Wait(request, status, ierror)
   ! b)
-  CALL MPI_Isend(data(2,2), SUBDOMAIN, MPI_DOUBLE, rank_left, 0, MPI_COMM_WORLD, request, ierror)
-  CALL MPI_Recv(data(2,DOMAINSIZE), SUBDOMAIN, MPI_DOUBLE, rank_right, 0, MPI_COMM_WORLD, status, ierror)
+  CALL MPI_Isend(data(2,2), SUBDOMAIN, MPI_DOUBLE_PRECISION, rank_left, 0, MPI_COMM_WORLD, request, ierror)
+  CALL MPI_Recv(data(2,DOMAINSIZE), SUBDOMAIN, MPI_DOUBLE_PRECISION, rank_right, 0, MPI_COMM_WORLD, status, ierror)
   CALL MPI_Wait(request, status, ierror)
   ! c)
-  CALL MPI_Sendrecv(data(2,2), SUBDOMAIN, MPI_DOUBLE, rank_left, 0, data(2,DOMAINSIZE), SUBDOMAIN, MPI_DOUBLE, rank_right, 0, MPI_COMM_WORLD, status, ierror)
+  CALL MPI_Sendrecv(data(2,2), SUBDOMAIN, MPI_DOUBLE_PRECISION, rank_left, 0, data(2,DOMAINSIZE), SUBDOMAIN, MPI_DOUBLE_PRECISION, rank_right, 0, MPI_COMM_WORLD, status, ierror)
   !  to the right
   ! a)
-  CALL MPI_Irecv(data(2,1), SUBDOMAIN, MPI_DOUBLE, rank_left, 0, MPI_COMM_WORLD, request, ierror)
-  CALL MPI_Send(data(2,DOMAINSIZE-1), SUBDOMAIN, MPI_DOUBLE, rank_right, 0, MPI_COMM_WORLD, ierror)
+  CALL MPI_Irecv(data(2,1), SUBDOMAIN, MPI_DOUBLE_PRECISION, rank_left, 0, MPI_COMM_WORLD, request, ierror)
+  CALL MPI_Send(data(2,DOMAINSIZE-1), SUBDOMAIN, MPI_DOUBLE_PRECISION, rank_right, 0, MPI_COMM_WORLD, ierror)
   CALL MPI_Wait(request, status, ierror);
   ! b)
-  CALL MPI_Isend(data(2,DOMAINSIZE-1), SUBDOMAIN, MPI_DOUBLE, rank_right, 0, MPI_COMM_WORLD, request, ierror)
-  CALL MPI_Recv(data(2,1), SUBDOMAIN, MPI_DOUBLE, rank_left, 0, MPI_COMM_WORLD, status, ierror)
+  CALL MPI_Isend(data(2,DOMAINSIZE-1), SUBDOMAIN, MPI_DOUBLE_PRECISION, rank_right, 0, MPI_COMM_WORLD, request, ierror)
+  CALL MPI_Recv(data(2,1), SUBDOMAIN, MPI_DOUBLE_PRECISION, rank_left, 0, MPI_COMM_WORLD, status, ierror)
   CALL MPI_Wait(request, status, ierror);
   ! c)
-  CALL MPI_Sendrecv(data(2,DOMAINSIZE-1), SUBDOMAIN, MPI_DOUBLE, rank_right, 0, data(2,1), SUBDOMAIN, MPI_DOUBLE, rank_left, 0, MPI_COMM_WORLD, status, ierror)
+  CALL MPI_Sendrecv(data(2,DOMAINSIZE-1), SUBDOMAIN, MPI_DOUBLE_PRECISION, rank_right, 0, data(2,1), SUBDOMAIN, MPI_DOUBLE_PRECISION, rank_left, 0, MPI_COMM_WORLD, status, ierror)
 
   IF (rank.EQ.9) THEN
      WRITE (*,*) 'data of rank 9 after communication'
