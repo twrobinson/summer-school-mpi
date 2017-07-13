@@ -28,7 +28,7 @@
 \begin{frame}{Course Objectives}
 \begin{itemize}
 \item The understanding of a point-to-point communications
-\item The understanding of their different flavors
+\item The understanding of their different flavours
 \item The importance of buffer availability and scope
 \end{itemize}
 \end{frame}
@@ -61,7 +61,7 @@ Communication between 2 processes:
 \justifying
 Data is exchanged in the buffer, an array of count elements of some particular MPI data type
 \begin{itemize}
-\item One argument that usually must be given to MPI routines is the type of the data being passed.
+\item One argument that must be given to MPI routines is the type of the data being passed
 \item This allows MPI programs to run automatically in heterogeneous environments
 \end{itemize}
 Messages are identified by their envelopes. A message could be exchanged only if the sender and receiver specify the correct envelope.\\[5mm]
@@ -125,7 +125,7 @@ MPI_RECV(buf, count, type, source, tag, comm, status)
 \begin{black1block}{}
 \begin{tabular}{rl}
     \textbf{buf}    & array of type type see table\\
-    \textbf{count}  & number of element of buf to be sent\\
+    \textbf{count}  & number of elements to be sent\\
     \textbf{type}   & MPI type of buf\\
     \textbf{dest}   & rank of the destination process\\
     \textbf{source} & rank of the source process\\
@@ -173,7 +173,7 @@ A tag is a user-defined identity for a message.
 \begin{itemize}
     \item To receive from any source: \lstinlinePseudo{MPI_ANY_SOURCE}
     \item To receive with any tag: \lstinlinePseudo{MPI_ANY_TAG}
-\item Actual source and tag are returned in the receiver’s status parameter
+\item Actual source and tag are returned in the receiver's status parameter
 \end{itemize}
 \end{frame}
 
@@ -190,7 +190,7 @@ A send resp.\ a receive can be triggered before or after its corresponding recei
 \begin{blue1block}{Common MPI protocol}
 {\color{cscsred}Internal to MPI not expose to the user, not defined by the standard}
 \begin{Pseudolisting}[Pseudo-code]{}
-if (size_to_send < CSTE ) {
+if (size_to_send < CST ) {
   /* EAGER protocol:
   post a send request using a buffer
   expecting the receive to store it */
@@ -223,15 +223,15 @@ Without non-blocking communications there is potential deadlocks
 \includegraphics[scale=1]{02.MPI_pt2pt/deadlock.pdf}
 \end{center}
 
-Also non-blocking coommunication are usefull to overlap communication and computation
+Also non-blocking coommunication are useful to overlap communication and computation
 \end{frame}
 
 \begin{frame}{Blocking and non-blocking communications}
 \begin{green1block}{A blocking communication means\ldots}
-    That the buffer can be re-used after the function as returned.
+    That the buffer can be re-used after the function is returned.
 \end{green1block}
 \begin{green1block}{A non-blocking communication means\ldots}
-    That the buffer can only be re-used after a wait function as returned.\\
+    That the buffer can only be re-used after a wait function is returned.\\
     Until then, the buffer must not be overwritten (and even read).
 \end{green1block}
 \begin{red1block}{\textbf{Blocking} and non-blocking do not mean\ldots}
@@ -256,7 +256,7 @@ MPI_Send(buf,MPI_INT,5,...);
 // after the function returns
 // the communication is done
 // the buffer can be re-used
-but[3]=5
+buf[3]=5
 \end{Pseudolisting}
         \end{column}
         \begin{column}{0.45\paperwidth}
@@ -270,7 +270,7 @@ MPI_Isend(buf,MPI_INT,5,...);
 // buf[3]=5 illegal
 MPI_Wait(...);
 // here communication is done
-but[3]=5
+buf[3]=5
 \end{Pseudolisting}
         \end{column}
     \end{columns}
@@ -328,7 +328,7 @@ MPI_Testall(count, requests[], flag, status[])
 
 \subsection{Transfer modes}
 \begin{frame}{Transfer modes}
-Five different communication modes are supported for the Send:
+Four different communication modes are supported for the Send:
 \begin{itemize}
     \item Standard Mode
     \item Synchronous Mode
@@ -430,7 +430,7 @@ MPI_Sendrecv(sndbuf, snd_size, snd_type, rcvid, tag,
 
 \begin{frame}[fragile]{Other functions}
 \begin{itemize}
-\item Look into incomming message before to do a recv:\\\hspace{1cm}\lstinlinePseudo{MPI_Probe, MPI_Iprobe}
+\item Check for incoming message without actually receiving it:\\\hspace{1cm}\lstinlinePseudo{MPI_Probe, MPI_Iprobe}
 \item Buffer management:\\\hspace{1cm}\lstinlinePseudo{MPI_Buffer_attach, MPI_Buffer_detach}
 \item Wait functions:\\\hspace{1cm}\lstinlinePseudo{MPI_Waitany, MPI_Waitsome}
 \item Test functions:\\\hspace{1cm}\lstinlinePseudo{MPI_Testany, MPI_Testsome}

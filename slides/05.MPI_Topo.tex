@@ -76,30 +76,29 @@ Processes may be in more than one group/communicator having a unique rank within
 \end{columns}
 \end{frame}
 
+%\begin{frame}[fragile]{Defining a new communicator: the simple approach}
+%\begin{Fortranlisting}[]{}
+%MPI_group MPI_GROUP_WORLD
+%MPI_group first_row_group
+%MPI_Comm first_row_comm
+%Integer row_size
+%Parameter(row_size=2)
+%Integer process_ranks(row_size)
+%
+%Do i = 1, row_size
+%   process_ranks(i) = i-1
+%Enddo
+%
+%Call MPI_COMM_GROUP(MPI_COMM_WORLD, MPI_GROUP_WORLD, ierr)
+%
+%Call MPI_GROUP_INCL(MPI_GROUP_WORLD, row_size,
+%                    process_ranks, first_row_group, ierr)
+%
+%Call MPI_COMM_CREATE(MPI_COMM_WORLD, first_row_group, first_row_comm, ierr)
+%\end{Fortranlisting}
+%\end{frame}
 
-\begin{frame}[fragile]{Defining a new communicator: the simple approach}
-\begin{Fortranlisting}[]{}
-MPI_group MPI_GROUP_WORLD
-MPI_group first_row_group
-MPI_Comm first_row_comm
-Integer row_size
-Parameter(row_size=2)
-Integer process_ranks(row_size)
-
-Do i = 1, row_size
-   process_ranks(i) = i-1
-Enddo
-
-Call MPI_COMM_GROUP(MPI_COMM_WORLD, MPI_GROUP_WORLD, ierr)
-
-Call MPI_GROUP_INCL(MPI_GROUP_WORLD, row_size,
-                    process_ranks, first_row_group, ierr)
-
-Call MPI_COMM_CREATE(MPI_COMM_WORLD, first_row_group, first_row_comm, ierr)
-\end{Fortranlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Defining a new communicator: the smart approach}
+\begin{frame}[fragile]{Defining a new communicator: MPI\_COMM\_SPLIT}
 \begin{Pseudolisting}[]{}
 MPI_Comm_split(comm, color, key, comm_out)
 \end{Pseudolisting}
@@ -166,7 +165,7 @@ Call MPI_COMM_SPLIT(MPI_COMM_WORLD, jCol, iRow, col_comm, ierr)
 \end{itemize}
 \begin{blue1block}{Cartesian topology}
 \begin{itemize}
-\item Each process is “connected” to its neighbors in a virtual grid
+\item Each process is ``connected'' to its neighbours in a virtual grid
 \item Boundaries can be cyclic
 \item Identified by (discrete) Cartesian coordinates $(i, j, k)$
 \end{itemize}
@@ -205,7 +204,7 @@ This is in general a more effective way of distribute the domain, since:
 \end{column}
 \end{columns}
 \vspace{0.5cm}
-However, it is more difficult to handle: who are my neighbors?
+However, it is more difficult to handle: who are my neighbours?
 \end{frame}
 
 
@@ -310,7 +309,7 @@ MPI_Cart_coords(comm, rank, maxdims, coords)
 \end{frame}
 
 
-\begin{frame}[fragile]{Finding neighbors: Shift}
+\begin{frame}[fragile]{Finding neighbours: Shift}
 \begin{columns}
 \begin{column}{0.65\paperwidth}
 \begin{Pseudolisting}[]{}

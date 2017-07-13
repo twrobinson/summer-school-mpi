@@ -18,10 +18,10 @@
 \begin{frame}{Why MPI?}
 \begin{itemize}
     \item Distributed memory - use more nodes and cores
-    \item Industry standards endorsed by many HPC actors
+    \item Industry standards endorsed by HPC community
     \item Several implementations exist:
     \begin{itemize}
-        \item Mpich, OpenMPI, IntelMPI, \textbf{CrayMPI},\ldots
+        \item MPICH, OpenMPI, IntelMPI, \textbf{CrayMPI},\ldots
     \end{itemize}
 \end{itemize}
 \end{frame}
@@ -41,7 +41,7 @@
 
 \begin{frame}{Course Objectives}
 \begin{itemize}
-\item The understanding of MPI’s essential concepts
+\item The understanding of MPI's essential concepts
 \item Be able to use all basic features of MPI
 \item Be able to write highly parallel HPC code
 %\item Be able to use I/O and other system interfaces
@@ -87,7 +87,7 @@ The MPI standardization effort makes use of the most attractive features of a nu
     \item A set of functions to exchange messages between processes
     \item A standard that defines the behaviors of the MPI functions
     \item Bindings for C and Fortran
-    \item[\color{cscsred}$\Rightarrow$] It is just a library!
+    \item[\color{cscsred}$\Rightarrow$] MPI is not a library, per se, rather a spec of what such a library should be
 \end{itemize}
 \end{blue2block}
 \end{frame}
@@ -98,8 +98,8 @@ The MPI standardization effort makes use of the most attractive features of a nu
 \item 92: agreement to develop one generic library, MPI was born.
 \item Many companies helped finance the standard: IBM, Cray,\ldots
 \item 94: First version of the standard was released, MPI-1
-\item 95: Mpich and Lam-MPI were the first implementations
-\item 98: Second version of the standard was relapsed, MPI-2
+\item 95: MPICH and LAM-MPI were the first implementations
+\item 98: Second version of the standard was released, MPI-2
 \item 02: MPI implementations were MPI-2 compliant
 \item 08: Third version of the standard was raised, MPI-3
 \end{itemize}
@@ -107,7 +107,7 @@ The MPI standardization effort makes use of the most attractive features of a nu
 
 \begin{frame}{MPI Standard}
 \begin{itemize}
-\item This is a standard, not a user’s guide
+\item This is a standard, not a user's guide
 \item It is designed to be unambiguous, not easy to follow.
 \end{itemize}
 
@@ -137,7 +137,7 @@ The MPI standardization effort makes use of the most attractive features of a nu
 \begin{black1block}{}
 \begin{itemize}
 \item Resources are Local (differently from shared memory model)
-\item Each process runs in a “isolated” environment. Interactions requires Messages Exchange
+\item Each process runs in a ``isolated'' environment. Interactions require exchange of messages 
 \item Messages can be: instructions, data, synchronization
 \item Message Passing works also in a Shared Memory system
 \item Time to exchange messages is much larger than accessing local memory
@@ -223,9 +223,9 @@ MPI_Finalize()
 
 \begin{frame}{MPI communicators and ranks}
 \begin{itemize}
-    \item Every process has a MPI rank and belongs to an MPI communicator
+    \item Every process has an MPI rank and belongs to an MPI communicator
     \item<2-> An MPI rank is an identification number
-    \item<3-> An MPI communicator is a set of MPI rank
+    \item<3-> An MPI communicator is a set of MPI ranks
     \item<4-> Ranks are numbered locally to communicator
 \end{itemize}
 \begin{center}
@@ -274,9 +274,9 @@ Rank 2: MPI_Recv(<recv data buffer>, 1, MyCommunicator)
 \visible<3->{
 \begin{black0block}{}
 \begin{itemize}
-    \item Rank 2 is prepare to receive data from Rank 1
+    \item Rank 2 is prepared to receive data from Rank 1
         \begin{itemize}
-            \item \lstinlinePseudo{MPI_Recv} is called in "the right order" (deadlock)
+            \item \lstinlinePseudo{MPI_Recv} is called in ``the right order'' (avoid deadlock)
         \item Rank 2 knows the maximum bound on the buffer size
         \end{itemize}
     \item[\color{cscsred}$\Rightarrow$]\textbf{\color{cscsred}Parallel!}
@@ -289,7 +289,8 @@ Rank 2: MPI_Recv(<recv data buffer>, 1, MyCommunicator)
 \begin{frame}[fragile]{Example of MPI source code}
 \begin{Cpplisting}[]{}
 #include<mpi.h>
-int main(int argc, char *argv[])
+#include<assert.h>
+int main(int argc, char *argv[]){
     int data[64];
     int nranks, my_rank;
 
@@ -317,15 +318,15 @@ int main(int argc, char *argv[])
 
 \begin{blue1block}{Launcher: mpirun/srun}
 \begin{itemize}
-    \item Starts all process on all computer nodes (ssh)
-    \item Attributes rank numbers by setting argc and argv
+    \item Starts all process on all compute nodes (ssh)
+    \item Attributes rank numbers 
     \item Applies specific options like process pinning
 \end{itemize}
 \end{blue1block}
 
 \begin{blue1block}{Library functions}
 \begin{itemize}
-    \item Setup process (rank, size) from launcher (argc, argv)
+    \item Setup process (rank, size) from launcher 
     \item Setup underlying network library (TCP, RDMA, \ldots)
     \item Process event coming from the application
         \begin{itemize}
@@ -339,7 +340,7 @@ int main(int argc, char *argv[])
 \subsection{MPI features}
 \begin{frame}{MPI features}
 \begin{itemize}
-    \item Different flavors of point-to-point communications
+    \item Different flavours of point-to-point communications
     \begin{itemize}
         \item Blocking, non-blocking, synchronous, \ldots
     \end{itemize}
