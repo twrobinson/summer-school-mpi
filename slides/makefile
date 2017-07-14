@@ -1,6 +1,6 @@
 
 
-all: 1 2 3 4 5 6 7
+all: 1 2 3 4 5 6 7 8
 
 1:
 	pdflatex 01.MPI_Intro.tex
@@ -30,6 +30,10 @@ all: 1 2 3 4 5 6 7
 	pdflatex 07.MPI_Extra.tex
 	pdflatex 07.MPI_Extra.tex
 
+8:
+	pdflatex 08.MPI_OpenMP.tex
+	pdflatex 08.MPI_OpenMP.tex
+
 clean:
 	rm -f 01.MPI_Intro.pdf 01.MPI_Intro.aux 01.MPI_Intro.dvi 01.MPI_Intro.log 01.MPI_Intro.nav 01.MPI_Intro.out 01.MPI_Intro.snm 01.MPI_Intro.toc 01.MPI_Intro.vrb 01.MPI_Intro.listing
 	rm -f 02.MPI_pt2pt.pdf 02.MPI_pt2pt.aux 02.MPI_pt2pt.dvi 02.MPI_pt2pt.log 02.MPI_pt2pt.nav 02.MPI_pt2pt.out 02.MPI_pt2pt.snm 02.MPI_pt2pt.toc 02.MPI_pt2pt.vrb 02.MPI_pt2pt.listing
@@ -38,4 +42,5 @@ clean:
 	rm -f 05.MPI_Topo.pdf 05.MPI_Topo.aux 05.MPI_Topo.dvi 05.MPI_Topo.log 05.MPI_Topo.nav 05.MPI_Topo.out 05.MPI_Topo.snm 05.MPI_Topo.toc 05.MPI_Topo.vrb 05.MPI_Topo.listing
 	rm -f 06.MPI_Miniapp.pdf 06.MPI_Miniapp.aux 06.MPI_Miniapp.dvi 06.MPI_Miniapp.log 06.MPI_Miniapp.nav 06.MPI_Miniapp.out 06.MPI_Miniapp.snm 06.MPI_Miniapp.toc 06.MPI_Miniapp.vrb 06.MPI_Miniapp.listing
 	rm -f 07.MPI_Extra.pdf 07.MPI_Extra.aux 07.MPI_Extra.dvi 07.MPI_Extra.log 07.MPI_Extra.nav 07.MPI_Extra.out 07.MPI_Extra.snm 07.MPI_Extra.toc 07.MPI_Extra.vrb 07.MPI_Extra.listing
+	rm -f 08.MPI_OpenMP.pdf 08.MPI_OpenMP.aux 08.MPI_OpenMP.dvi 08.MPI_OpenMP.log 08.MPI_OpenMP.nav 08.MPI_OpenMP.out 08.MPI_OpenMP.snm 08.MPI_OpenMP.toc 08.MPI_OpenMP.vrb 08.MPI_OpenMP.listing
 	rm -f SummerSchool.conf.tex.aux SummerSchool.conf.aux
