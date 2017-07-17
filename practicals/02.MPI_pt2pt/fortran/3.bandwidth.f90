@@ -19,7 +19,9 @@ PROGRAM bandwidth
 ! start mpi using 2 nodes with one process per node:
 ! srun -N 2 -n 2 .......
 ! use gnuplot to plot the result:
+! module unload ddt
 ! gnuplot bandwidth.gp
+! display bandwisth.png (login with "ssh -Y <machine>")
 !
 ! Advanced: try on only one node, explain the bandwidth values
 ! srun -N 1 -n 2 .......
