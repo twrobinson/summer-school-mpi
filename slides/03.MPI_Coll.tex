@@ -137,7 +137,7 @@ The sender arguments are meaningful only for root.
 %\end{frame}
 
 \begin{frame}[fragile]{Gather}
-One-to-all communication: different data collected by the root process, from all others processes in the communicator.\\
+All-to-one communication: different data collected by the root process, from all others processes in the communicator.\\
 \begin{Pseudolisting}[]{}
 MPI_Gather(sndbuf, sndcount, sndtype,
            rcvbuf, rcvcount, rcvtype, root, comm)
