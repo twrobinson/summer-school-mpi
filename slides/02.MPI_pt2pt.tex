@@ -252,9 +252,8 @@ Also non-blocking communication are useful to overlap communication and computat
             Blocking example:
 \begin{Pseudolisting}[]{}
 int buf[120];
-MPI_Send(buf,MPI_INT,5,...);
+MPI_Send(buf,5,MPI_INT,...);
 // after the function returns
-// the communication is done
 // the buffer can be re-used
 buf[3]=5
 \end{Pseudolisting}
@@ -263,7 +262,7 @@ buf[3]=5
             Non-blocking example:
 \begin{Pseudolisting}[]{}
 int buf[120];
-MPI_Isend(buf,MPI_INT,5,...);
+MPI_Isend(buf,5,MPI_INT,...);
 // after the function returns
 // the communication is not done
 // do not overwrite buf
@@ -274,7 +273,6 @@ buf[3]=5
 \end{Pseudolisting}
         \end{column}
     \end{columns}
-Each rank does not necessary know if the communication has been completed by the time the MPI send function returns.\\
 The \lstinlinePseudo{I} in \lstinlinePseudo{MPI_Isend} means {\color{cscsred}immediate}, the function returns "immediately" after its call.
 \end{frame}
 
@@ -344,7 +342,6 @@ All of them can be Blocking or Non-Blocking.
 \item A send operation can be started whether or not a matching receive has started
 \item Can be buffered or synchronous. It is up to the implementation (and not MPI standard) to decide whether outgoing messages will be buffered
 \item May complete before a matching receive is posted
-\item Non-local operation (in general)
 \end{itemize}
 \end{frame}
 
@@ -353,7 +350,6 @@ All of them can be Blocking or Non-Blocking.
 \item A send operation can be started whether or not a matching receive has started
 \item The send will complete successfully only if a matching receive was posted and the receive operation has reached a certain point in its execution
 \item The completion of a synchronous send not only indicates that the send buffer can be reused but also indicates that the receiver has reached a certain point in its execution (usually it has received all data)
-\item Non-local operation
 \end{itemize}
 \end{frame}
 
@@ -363,7 +359,6 @@ All of them can be Blocking or Non-Blocking.
 \item It completes whether or not a matching receive has been posted (independent from the receive)
 \item The original buffer can be read and overwritten, it has been copied to user-supplied buffer
 \item Buffer space is allocated on demand \lstinlinePseudo{MPI_Buffer_Attach}
-\item Local operation
 \end{itemize}
 \end{frame}
 
@@ -372,7 +367,6 @@ All of them can be Blocking or Non-Blocking.
     \item A send operation may be started only if the matching receive is already started (error otherwise)
 \item The completion of the send operation does not depend on the status of a matching receive and merely indicates the send buffer can be reused
 \item Used for performance reasons
-\item Non-local operation
 \end{itemize}
 \end{frame}
 
