@@ -26,11 +26,9 @@ int main( int argc, char *argv[] )
     MPI_Init_thread( 0, 0, MPI_THREAD_SERIALIZED, &provided );
     MPI_Init_thread( 0, 0, MPI_THREAD_MULTIPLE, &provided );
 */ 
-
-    MPI_Init_thread(0, 0, MPI_THREAD_MULTIPLE, &provided );
-    MPI_Query_thread( &requested );
-        printf( "Query thread level= %d  Init_thread level= %d\n", requested, provided );
+    requested = MPI_THREAD_MULTIPLE;
+    MPI_Init_thread(0, 0, requested, &provided );
+        printf( "Requested thread level= %d  Init_thread provided level= %d\n", requested, provided );
  
     MPI_Finalize();
 }
-
