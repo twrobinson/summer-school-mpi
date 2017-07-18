@@ -1,0 +1,127 @@
+\documentclass[aspectratio=43]{beamer}
+\usepackage{ragged2e}
+\usepackage{multirow}
+\usepackage{alltt}
+
+\usetheme{CSCS}
+
+\include{SummerSchool.conf}
+
+% Select the image for the title page
+%\newcommand{\picturetitle}{cscs_images/image3.pdf}
+\newcommand{\picturetitle}{cscs_images/image5.pdf}
+%\newcommand{\picturetitle}{cscs_images/image6.pdf}
+
+\begin{document}
+
+% TITLE SLIDE
+\cscstitle
+
+\begin{frame}{Course Objectives}
+\begin{itemize}
+\item Hybrid OpenMP/MPI, preparing MPI for OpenMP
+\end{itemize}
+\end{frame}
+
+% TABLE OF CONTENT SLIDE
+\cscstableofcontents[hideallsubsections]{General Course Structure}
+
+\section{An introduction to MPI}
+\section{Point-to-point communications}
+\section{Collective communications}
+\section{Topology}
+\section{Datatypes}
+\section{Other topics}
+\cscstableofcontents[currentsection]{General Course Structure}
+
+% CHAPTER SLIDE
+\cscschapter{Configure MPI to enable OpenMP}
+
+\subsection{Hybrid OpenMP/MPI}
+
+\begin{frame}[fragile]{Why OpenMP with MPI}
+There are two main motivations:
+\begin{itemize}
+\item To reduce the memory footprint (both in application and in communication buffers)
+\item To increase scalability (but you might not be faster than with MPI alone)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Reducing memory requirements}
+\begin{itemize}
+\item Memory per core is generally decreasing
+\item MPI applications require some data to be replicated between MPI processes 
+ \begin{itemize}
+        \item Read-only lookup table where every process has a copy
+        \item Halo regions of neighbours          
+        \item MPI internal data structions, e.g. communicaiton buffers
+    \end{itemize}
+\end{itemize}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+Local domain size &  halos & \% data in halos\\\hline
+$100^3 = 1,000,000$  & $102^3 - 100^3 = 61,208$ & $6\%$\\\hline
+$50^3 = 125,000$  &  $52^3 - 50^3 = 15,608$ & $11\%$ \\\hline
+$20^3 = 8,000$  & $22^3 - 20^3 = 2648$  & $25\%$ \\\hline
+\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Improving performance}
+\begin{itemize}
+\item In the regime where MPI is scaling well, OpenMP will introduce overhead
+\item OpenMP can be used to exploit lower levels of parallelism
+ \begin{itemize}
+        \item Might be hard to load balance with MPI
+        \item Might have irregular communication pattern
+    \end{itemize}
+\item In some cases collective communication overheads might be reduced
+\item OpenMP has in-built load balancing capabilities (loop schedules, tasks)
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Preparing MPI for OpenMP}
+MPI requires to be setup with threads enabled:
+\begin{itemize}
+\item \lstinlinePseudo{MPI_Init} should be replaced by \lstinlinePseudo{MPI_Init_thread}
+\end{itemize}
+\begin{Pseudolisting}[]{}
+MPI_Init_thread(required, provided, ierror)
+\end{Pseudolisting}
+
+\lstinlinePseudo{required} specifies the requested level of thread support, and the actual level of support is then returned into \lstinlinePseudo{provided}.\\
+You should check the value of \lstinlinePseudo{provided} after the call
+\end{frame}
+
+\begin{frame}[fragile]{MPI Thread level}
+\begin{itemize}
+    \item \lstinlinePseudo{MPI_THREAD_SINGLE}: Only one thread will execute (MPI-only application)
+    \item \lstinlinePseudo{MPI_THREAD_FUNNELED}: Only master thread will make MPI calls (master = the thread calling \lstinlinePseudo{MPI_Init_thread})
+    \item \lstinlinePseudo{MPI_THREAD_SERIALIZED}: Only one thread at a time will make MPI calls (user responsibility)
+    \item \lstinlinePseudo{MPI_THREAD_MULTIPLE}: Any thread may call MPI at any time, however that leads to slower performance (lock mechanism in MPI)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Checking the level of thread support provided}
+\begin{itemize}
+\item The four classes of support are guaranteed to be monotonicly increasing
+ \lstinlinePseudo{MPI_THREAD_SINGLE} $<$ \lstinlinePseudo{MPI_THREAD_FUNNELED} $<$ \lstinlinePseudo{MPI_THREAD_SERIALIZED} $<$ \lstinlinePseudo{MPI_THREAD_MULTIPLE}
+\end{itemize}
+\begin{itemize}
+\item Therefore you can test to make sure at least the level you require is provided and exit if not:
+\end{itemize}
+\begin{Pseudolisting}[]{}
+if (provided < requested) {
+     printf("Not high enough level of thread support.\n");
+     MPI_Abort(MPI_COMM_WORLD,1);
+}
+\end{Pseudolisting}
+\end{frame}
+
+
+% THANK YOU SLIDE
+\cscsthankyou{Thank you for your attention.}
+
+\end{document}
