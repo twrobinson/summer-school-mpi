@@ -179,6 +179,10 @@ Message Passing is a \textbf{COOPERATIVE} approach,\\based on \textbf{THREE} bas
 \item description of data?
 \item process identification?
 \item when has the operation completed?
+\begin{itemize}
+\item synchronous send: sender will always stall until receieve has posted
+\item regular send: returns when buffer can be reused -- \textit{may} be before receiver has actually posted the receive
+\end{itemize}
 \end{itemize}
 \end{frame}
 
